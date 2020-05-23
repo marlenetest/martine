@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+ <?xml version="1.0" encoding="UTF-8"?>
+  <configuration>
+    <system.webServer>
+      <staticContent>
+        <mimeMap fileExtension=".mp4" mimeType="application/mp4" />
+       </staticContent>
+    </system.webServer>
+  </configuration>
+  
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>CV de Martine</title>
+    <style> 
+      input[type="button"] {
+        background-color: #000000;
+        border: 12px;
+        color: white;
+        padding: 16px 32px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+}
+    </style>
+  </head>
+
+    <body>
+      <div id="conteneur1">
+        <div class="lisiereg">
+          <div id="lisiere"></div>
+        </div>
+        <div class="corps">
+          <h1>CV de Martine</h1>
+          <p>	<a href="images/martine-enpied.jpg"><img src="images/martine-tb.jpg" class="PhotoCV" alt="Photo de Martine" title="Cliquez pour agrandir" /></a>
+    	    </p>
+          <div id="conteneur2">
+            <div class="EXP">        
+              <h2>Son expérience</h2>
+                <ol>
+                  <li>Martine à la ferme (1954)</li>
+                  <li>Martine au cirque (1956)</li>
+                  <li>Martine fait de la bicyclette (1971)</li>
+                  <li>Martine fait la cuisine (1974)</li>
+                  <li>Martine protège la nature (2009)</li>
+                </ol>
+            </div>
+            <div class="COMP">
+              <h2>Ses compétences</h2>
+                <ol>
+                  <li>La cuisine</li>
+                  <li>La jongle</li>
+                  <li>La comm'</li>
+                </ol>
+            </div>
+            <div class="formation">
+              <h2>Sa formation</h2>
+                <p>Non-diplômée, Martine a tout de même fréquenté les bancs de l'école primaire, et peut-être également du collègue. On ne sait pas si elle a eu la chance d'aller au lycée ou à l'université.</p>
+                <p>On peut dire qu'elle a appris sur le tas. Ces diplômes, elle les a eus à l'école de la vie.</p>	
+            </div>
+          </div>
+          <div id="conteneur3">
+            <div class="Sa carrière cinématographique">
+              <h2>Sa carrière cinématographique</h2>
+                <figure>
+                <video id="vid1" width="320" height="240" ontimeupdate="update(this)" controls>
+                  <source src="video/Martine.mp4" type="video/mp4">
+                  <source src="video/Martine.avi" type="video/avi">
+                  <source src="video/Martine.mpg" type="video/mpg">
+                  <source src="video/Martine.ogv" type="video/ogv">
+                  Votre navigateur ne supporte pas la balise video
+                  </video>
+                <figcaption>Lire cette vidéo grâce au menu ci-dessous.</figcaption>
+                </figure> 
+                <div id="onVidEnd">
+                </div>
+                <script>
+                  let vid1=document.getElementById("vid1");
+                  let currentTimeText=document.getElementById("currentTimeText");
+                  let durationTimeText=document.getElementById("durationTimeText");
+
+                  //mes eventlisteners
+                  document.getElementById("vid1").addEventListener("timeupdate",seekTimeUpdate,false);
+                    //fonction censée détecter la fin de lecture de la vidéo
+                  document.getElementById("vid1").addEventListener('ended',finVidéo,false);
+
+                  //Ma fonction pour détecter et mettre à jour currentTime et duration... marche pas
+                  function seekTimeUpdate(){
+                    let curmins = Math.floor(vid1.currentTime / 60);
+                    let cursecs = Math.floor(vid1.currentTime - curmins * 60);
+                    let durmins = Math.floor(vid1.duration / 60);
+                    let cursecs = Math.floor(vid1.duration - curmins * 60);
+                    if(cursecs < 10){cursecs = "0"+cursecs;}
+                    if(dursecs < 10){dursecs = "0"+dursecs;}
+                    if(curmins < 10){curmins = "0"+curmins;}
+                    if(durmins < 10){durmins = "0"+durmins;}
+                    currentTimeText.innerHTML = curmins+":"+cursecs;
+                    durationTimeText.innerHTML = durmins+":"+dursecs;
+                  }
+
+                  // la fonction censée accompagner la fin de la vidéo
+                  function finVidéo(e) {
+                    vidEnded.innerHTML = "<p> <a href="images/martine-enpied.jpg"><img src="images/martine-tb.jpg" class="PhotoCV" alt="Photo de Martine" title="Cliquez pour agrandir" /></a></p>"
+                  }
+
+                  /* lien vers le cours qui demande cet exercice
+                   https://openclassrooms.com/fr/courses/4810241-utilisez-html5-pour-linterface-utilisateur/4979191-utilisez-les-balises-de-contenu-embarque
+                  */
+
+                </script>
+                <input type="button" onClick="vid1.play()" value="Jouer"/>
+                <input type="button" onClick="vid1.pause()" value="Mettre en pause"/>
+                <input type="button" onClick="vid1.currentTime = 0;vid1.play()" value="Rejouer du début"/>
+                <span id="currentTimeText"></span> / <span id="durationTimeText"></span>
+                <div id="vidEnded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
